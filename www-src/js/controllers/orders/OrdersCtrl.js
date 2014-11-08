@@ -17,8 +17,34 @@
 
         resetForm();
 
-        // Employees
+        // Users
         vm.availableUsers = ['James Morgan', 'Andy Gray', 'Simon Souter', 'Alex Lashford'];
+
+        // Available page configuration
+        vm.availableRestaurants = [
+            {
+                name: 'Abduls Levenshulme',
+                openingTimes: '...',
+                foods: [
+                    {name: 'Small Chicken Naan', price: 380},
+                    {name: 'Small Chicken Chapatti', price: 300},
+                    {name: 'Chicken Lamb Mix Naan', price: 600},
+                    {name: 'Chicken Lamb Mix Chapatti', price: 600},
+                    {name: 'Large Chicken Naan', price: 600},
+                    {name: 'Large Chicken Chapatti', price: 600},
+                    {name: 'Large Lamb Naan', price: 600},
+                    {name: 'Large Lamb Chapatti', price: 600},
+                    {name: 'Chicken Seekh Mix Naan', price: 600},
+                    {name: 'Small Seekh Naan', price: 290},
+                    {name: 'Small Seekh Chapatti', price: 290},
+                    {name: 'Large Seekh Naan', price: 370},
+                    {name: 'Large Seekh Chapatti', price: 370},
+                    {name: 'Small Chips', price: 130},
+                    {name: 'Large Chips', price: 200},
+                    {name: 'Chicken Donner', price: 350}
+                ]
+            }
+        ];
 
         this.createOrder = function () {
             vm.orders.$add(angular.copy(vm.newOrder))
@@ -43,7 +69,11 @@
             vm.newOrder = {
                 createdBy: '',
                 name: '',
-                createdDate: ''
+                restaurant: '',
+                content: [
+                    {}
+                ],
+                createdDate: Date.now()
             };
         }
     }

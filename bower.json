@@ -19,6 +19,7 @@
     "angularfire": "~0.8.2"
   },
   "resolutions": {
-    "angular": "1.3.0"
+    "angular": "1.3.0",
+    "firebase": "~1.1.3"
   }
 }

@@ -10,52 +10,19 @@
         // ViewModel
         var vm = this;
 
-        // Available page configuration
-        vm.availableRestaurants = [
-            {
-                name: 'Abduls Levenshulme',
-                openingTimes: '...',
-                foods: [
-                    {name: 'Small Chicken Naan', price: 380},
-                    {name: 'Small Chicken Chapatti', price: 300},
-                    {name: 'Chicken Lamb Mix Naan', price: 600},
-                    {name: 'Chicken Lamb Mix Chapatti', price: 600},
-                    {name: 'Large Chicken Naan', price: 600},
-                    {name: 'Large Chicken Chapatti', price: 600},
-                    {name: 'Large Lamb Naan', price: 600},
-                    {name: 'Large Lamb Chapatti', price: 600},
-                    {name: 'Chicken Seekh Mix Naan', price: 600},
-                    {name: 'Small Seekh Naan', price: 290},
-                    {name: 'Small Seekh Chapatti', price: 290},
-                    {name: 'Large Seekh Naan', price: 370},
-                    {name: 'Large Seekh Chapatti', price: 370},
-                    {name: 'Small Chips', price: 130},
-                    {name: 'Large Chips', price: 200},
-                    {name: 'Chicken Donner', price: 350}
-                ]
-            }
-        ];
+        var ref = new Firebase("https://bug-free-food.firebaseio.com/orders");
+        var sync = $firebase(ref);
+
+        vm.orders = sync.$asArray();
 
         // Employees
         vm.availableUsers = ['James Morgan', 'Andy Gray', 'Simon Souter', 'Alex Lashford'];
 
-        vm.availableOrders = [
-            {
-                name: 'Friday Kebabs', created: Date.now()
-            }
-        ];
-
-        vm.selectedRestaurant = {};
+        vm.selectedOrder = undefined;
 
         // The data form
         vm.myOrder = {
             foods: []
-        };
-
-        this.restaurantSelected = function () {
-            vm.myOrder.foods = [
-                {}
-            ];
         };
 
         this.addFoodItem = function () {
@@ -72,7 +39,7 @@
             }
             var total = 0;
             vm.myOrder.foods.forEach(function (item) {
-                if(item.food && item.food.price){
+                if (item.food && item.food.price) {
                     total += item.food.price;
                 }
             });

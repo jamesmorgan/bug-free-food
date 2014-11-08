@@ -18,10 +18,6 @@
             templateUrl: '/www-build/views/partials/orders/orders.html',
             controller: 'OrdersCtrl as vm'
         });
-        $routeProvider.when('/orders/create', {
-            templateUrl: '/www-build/views/partials/orders/create.html',
-            controller: 'CreateOrderCtrl as vm'
-        });
 
         /**
          * Menus Management
@@ -47,10 +43,9 @@
             controller: 'CreateRestaurantCtrl as crc'
         });
 
-
         $routeProvider.when('/wizard/new-order', {
             templateUrl: '/www-build/views/partials/wizard/new-order.html',
-            controller: 'WizardCtrl as wc'
+            controller: 'WizardCtrl as vm'
         });
 
         /**
