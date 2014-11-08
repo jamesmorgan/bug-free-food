@@ -1,0 +1,21 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Restaurants...</h1>
+
+    <h2 class="sub-header">Add New Restaurant</h2>
+
+    <div class="table-responsive">
+
+        <form role="form">
+            <pre>{{crc.restaurants}}</pre>
+            <pre>{{crc.newRestaurant | json}}</pre>
+            <div class="form-group">
+                <label for="newRestaurantName">Name</label>
+                <input type="text" class="form-control" id="newRestaurantName" placeholder="Restaurant Name..."
+                       ng-model="crc.newRestaurant.name">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="crc.addRestaurant();">Add</button>
+        </form>
+
+    </div>
+
+</div>

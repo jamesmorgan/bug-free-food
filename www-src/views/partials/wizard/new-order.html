@@ -1,0 +1,55 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Make a new order</h1>
+
+    <h2 class="sub-header">Order my food, bug free....</h2>
+
+    <!--<pre>{{wc.availableOrders | json}}</pre>-->
+    <!--<pre>{{wc.availableRestaurants | json}}</pre>-->
+    <pre>{{wc.myOrder | json}}</pre>
+
+    <form class="form-horizontal" role="form" name="form" novalidate>
+
+        <div class="form-group">
+            <label for="selectOrder" class="col-sm-2 control-label">Select Order</label>
+            <select name="selectOrder" id="selectOrder"
+                    ng-model="wc.myOrder.order"
+                    ng-options="order as order.name for order in wc.availableOrders">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectMenu" class="col-sm-2 control-label">Select Restaurant</label>
+            <select name="selectMenu" id="selectMenu"
+                    ng-model="wc.selectedRestaurant"
+                    ng-change="wc.restaurantSelected()"
+                    ng-options="restaurant as restaurant.name for restaurant in wc.availableRestaurants">
+            </select>
+        </div>
+
+        <div ng-repeat="selctedFood in wc.myOrder.foods">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Item</label>
+                <select name="selectUser" id="selectUser"
+                        ng-model="wc.myOrder.foods[$index].user"
+                        ng-options="user for user in wc.availableUsers">
+                </select>
+                <select name="selectMenu"
+                        ng-model="wc.myOrder.foods[$index].food"
+                        ng-options="food as (food.name + ' - £' + ((food.price / 100).toFixed(2)) ) for food in wc.selectedRestaurant.foods">
+                </select>
+                <button ng-click="wc.removeFoodItem($index, selctedFood)">-</button>
+                <button ng-click="wc.addFoodItem()" ng-show="$last">+</button>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Confirm Order</button>
+            </div>
+            Order Total: {{wc.getOrderTotals()}}
+        </div>
+    </form>
+
+</div>

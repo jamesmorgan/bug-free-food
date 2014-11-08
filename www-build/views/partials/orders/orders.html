@@ -1,0 +1,33 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Create A New Order</h1>
+
+    <h2 class="sub-header">Fill in the form appropriately</h2>
+
+    <form role="form">
+        <pre>{{vm.newOrder | json}}</pre>
+        <div class="form-group">
+            <label for="newOrderName">Name</label>
+            <input type="text" class="form-control" id="newOrderName" placeholder="Name..."
+                   ng-model="vm.newOrder.name">
+        </div>
+        <div class="form-group">
+            <label for="newOrderCreatedBy">Created By</label>
+            <select name="newOrderCreatedBy" id="newOrderCreatedBy"
+                    ng-model="vm.newOrder.createdBy"
+                    ng-options="user for user in vm.availableUsers">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="newOrderDate">Created By</label>
+            <input type="date" class="form-control" id="newOrderDate"
+                   ng-model="vm.newOrder.createdDate">
+        </div>
+        <button type="submit" class="btn btn-default" ng-click="vm.createOrder();">Add</button>
+    </form>
+
+
+    <ul ng-repeat="order in vm.orders">
+        <li>{{order}} - <a class="btn btn-sm" ng-click="vm.removeOrder(order)">X</a> </li>
+    </ul>
+
+</div>
