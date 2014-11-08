@@ -5,7 +5,7 @@
     /**
      * @ngInject
      */
-    function TopNavCtrl($log, NotifyService, $firebaseSimpleLogin, Firebase, $firebase) {
+    function TopNavCtrl($log, NotifyService, $firebaseSimpleLogin, Firebase) {
 
         // ViewModel
         var vm = this;
@@ -17,22 +17,12 @@
         var authClient = $firebaseSimpleLogin(ref);
         console.log(authClient);
 
-        authClient.$getCurrentUser()
-            .then(function (user) {
-                if (user) {
-                    handleSuccessfulLogin(user);
-                }
-            });
+        authClient.$getCurrentUser().then(handleSuccessfulLogin);
 
         this.login = function () {
             $log.debug('Login - github');
             authClient.$login('github', { rememberMe: true, scope: 'user'})
-                .then(function (user) {
-                    handleSuccessfulLogin(user);
-                }, function (error) {
-                    $log.error(error);
-                    NotifyService.danger(error);
-                });
+                .then(handleSuccessfulLogin, popError);
         };
 
         this.logout = function () {
@@ -42,15 +32,21 @@
                     $log.debug('user is logged out');
                     NotifyService.success('user is logged out');
                 }, function (error) {
-                    $log.error(error);
-                    NotifyService.danger(error);
+                    popError(error);
                 });
         };
 
         function handleSuccessfulLogin(user) {
-            vm.currentUser = user;
-            $log.debug("User ID: " + user.uid + ", Provider: " + user.provider);
-            NotifyService.success("User ID: " + user.uid + ", Provider: " + user.provider);
+            if (user) {
+                vm.currentUser = user;
+                $log.debug("User ID: " + user.uid + ", Provider: " + user.provider);
+                NotifyService.success("User ID: " + user.uid + ", Provider: " + user.provider);
+            }
+        }
+
+        function popError(error) {
+            $log.error(error);
+            NotifyService.danger(error);
         }
     }
 
