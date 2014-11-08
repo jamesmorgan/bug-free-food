@@ -17,18 +17,22 @@
         var authClient = $firebaseSimpleLogin(ref);
         console.log(authClient);
 
+        authClient.$getCurrentUser()
+            .then(function (user) {
+                if (user) {
+                    handleSuccessfulLogin(user);
+                }
+            });
+
         this.login = function () {
             $log.debug('Login - github');
             authClient.$login('github', { rememberMe: true, scope: 'user'})
                 .then(function (user) {
-                    vm.currentUser = user;
-                    $log.debug("User ID: " + user.uid + ", Provider: " + user.provider);
-                    NotifyService.success("User ID: " + user.uid + ", Provider: " + user.provider);
+                    handleSuccessfulLogin(user);
                 }, function (error) {
                     $log.error(error);
                     NotifyService.danger(error);
                 });
-
         };
 
         this.logout = function () {
@@ -41,8 +45,13 @@
                     $log.error(error);
                     NotifyService.danger(error);
                 });
-
         };
+
+        function handleSuccessfulLogin(user) {
+            vm.currentUser = user;
+            $log.debug("User ID: " + user.uid + ", Provider: " + user.provider);
+            NotifyService.success("User ID: " + user.uid + ", Provider: " + user.provider);
+        }
     }
 
     angular
