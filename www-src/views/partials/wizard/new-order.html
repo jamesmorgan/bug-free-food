@@ -34,22 +34,21 @@
     <div class="col-sm-12" ng-if="vm.userHasOrder()">
 
         <div class="col-sm-6">
-            Your Orders:
+            Your Orders: ({{vm.findUserOrder().order.length}})
 
             <!--{{vm.findUserOrder()}}-->
 
-            {{vm.findUserOrder().order}}
-
             <div ng-repeat="item in vm.findUserOrder().order track by $index">
-                <!--{{vm.findUserOrder().order[$index]}}-->
-                {{item}}
                 <div class="form-group">
                     <select name="selectMenu"
+                            required
                             ng-model="vm.findUserOrder().order[$index]"
                             ng-options="food as (food.name + ' - £' + ((food.price / 100).toFixed(2))) for food in vm.selectedOrder.restaurant.foods">
                     </select>
                     <button ng-click="vm.removeFoodItem($index)">-</button>
-                    <button ng-click="vm.addFoodItem()" ng-show="$last">+</button>
+                    <button ng-click="vm.addFoodItem()"
+                            ng-show="$last">+
+                    </button>
                 </div>
             </div>
 
@@ -57,6 +56,7 @@
 
         <div class="col-sm-6">
             The orders:<br/>
+            <pre>{{vm.findUserOrder().order | json}}</pre>
             <pre>{{vm.selectedOrder | json}}</pre>
             <hr/>
             <div class="form-group">

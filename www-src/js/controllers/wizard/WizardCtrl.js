@@ -7,6 +7,8 @@
      */
     function WizardCtrl($log, NotifyService, Firebase, $firebase, UserModel) {
 
+        var self = this;
+
         // ViewModel
         var vm = this;
 
@@ -60,20 +62,18 @@
 
         this.addFoodItem = function () {
 
-//            this.findUserOrder().order[index].push(food);
-
-//            console.log(vm.orders);
-            console.log(this.findUserOrder().order);
-
-            vm.orders.$save(vm.selectedOrder);
-
-            this.findUserOrder().order.push({});
+            vm.orders.$save(vm.selectedOrder).then(function () {
+                NotifyService.success('Added ' + self.findUserOrder().order[self.findUserOrder().order.length - 1].name);
+                self.findUserOrder().order.push({});
+            });
         };
 
         this.removeFoodItem = function (index) {
             this.findUserOrder().order[index].splice(index, 1);
             console.log(vm.orders);
-            vm.orders.$save(vm.selectedOrder);
+            vm.orders.$save(vm.selectedOrder).then(function () {
+                NotifyService.success('Item removed');
+            });
         };
 
         this.getOrderTotals = function () {
