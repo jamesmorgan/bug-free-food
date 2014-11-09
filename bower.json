@@ -1,25 +1,25 @@
 {
-  "name": "bug-free-food",
-  "version": "0.0.1",
-  "homepage": "https://github.com/jamesmorgan/bug-free-food",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "public",
-    "server"
-  ],
-  "dependencies": {
-    "angular": "1.3.0",
-    "angular-bootstrap": "0.11.2",
-    "angular-route": "1.3.0",
-    "angular-notify": "~2.0.2",
-    "firebase": "~1.1.3",
-    "angularfire": "~0.8.2"
-  },
-  "resolutions": {
-    "angular": "1.3.0",
-    "firebase": "~1.1.3"
-  }
+    "name": "bug-free-food",
+    "version": "0.0.1",
+    "homepage": "https://github.com/jamesmorgan/bug-free-food",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "public",
+        "server"
+    ],
+    "dependencies": {
+        "angular": "1.3.0",
+        "angular-bootstrap": "0.11.2",
+        "angular-route": "1.3.0",
+        "angular-notify": "~2.0.2",
+        "firebase": "~1.1.3",
+        "angularfire": "~0.8.2"
+    },
+    "resolutions": {
+        "angular": "1.3.0",
+        "firebase": "~1.1.3"
+    }
 }

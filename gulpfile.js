@@ -17,11 +17,8 @@ var gulp = require('gulp'),
     mainBowerFiles = require('main-bower-files'),
     gulpFilter = require('gulp-filter'),
 // Build file only express setup
-    lrserver = require('tiny-lr')(),
     morgan = require('morgan'),
     express = require('express'),
-    livereload = require('connect-livereload'),
-    livereloadport = 35730,
     serverport = 3000;
 
 /************************************************
@@ -31,8 +28,6 @@ var gulp = require('gulp'),
 var server = express();
 // log all requests to the console
 server.use(morgan('dev'));
-// Add live reload
-server.use(livereload({port: livereloadport}));
 server.use(express.static('./'));
 // Serve index.html for all routes to leave routing up to Angular
 server.all('/*', function (req, res) {
@@ -43,8 +38,6 @@ server.all('/*', function (req, res) {
 gulp.task('start-dev-server', function () {
     // Start webserver
     server.listen(serverport);
-    // Start live reload
-    lrserver.listen(livereloadport);
 });
 
 /************************************************
