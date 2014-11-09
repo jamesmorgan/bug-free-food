@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-init="vm.init()">
 
     <div class="container-fluid">
         <div class="navbar-header">
@@ -20,7 +20,7 @@
                     <a ng-click="vm.logout()">Logout</a>
                 </li>
                 <li ng-if="vm.currentUser">
-                    <a><span class="glyphicon glyphicon-user"></span> {{vm.currentUser.username}}</a>
+                    <a><span class="glyphicon glyphicon-user"></span> {{vm.currentUser.displayName}}</a>
                 </li>
             </ul>
         </div>

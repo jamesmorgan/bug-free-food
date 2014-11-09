@@ -17,7 +17,10 @@
         var authClient = $firebaseSimpleLogin(ref);
         console.log(authClient);
 
-        authClient.$getCurrentUser().then(handleSuccessfulLogin);
+        // TODO move to resolve!
+        this.init = function () {
+            authClient.$getCurrentUser().then(handleSuccessfulLogin);
+        };
 
         this.login = function () {
             $log.debug('Login - github');

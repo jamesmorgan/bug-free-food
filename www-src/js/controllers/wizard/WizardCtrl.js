@@ -5,10 +5,12 @@
     /**
      * @ngInject
      */
-    function WizardCtrl($log, NotifyService, Firebase, $firebase) {
+    function WizardCtrl($log, NotifyService, Firebase, $firebase, UserModel) {
 
         // ViewModel
         var vm = this;
+
+        vm.user = UserModel.user;
 
         var ref = new Firebase("https://bug-free-food.firebaseio.com/orders");
         var sync = $firebase(ref);
@@ -25,12 +27,53 @@
             foods: []
         };
 
-        this.addFoodItem = function () {
-            vm.myOrder.foods.push({});
+        this.initOrderForUser = function () {
+            if (!vm.selectedOrder.details) {
+                vm.selectedOrder.details = [
+                    {
+                        user: UserModel.user,
+                        order: [
+                            {}
+                        ]
+                    }
+                ]
+            }
         };
 
-        this.removeFoodItem = function ($index) {
-            vm.myOrder.foods.splice($index, 1);
+        this.userHasOrder = function () {
+            if (!vm.selectedOrder || !vm.selectedOrder.details || !UserModel.user) {
+                return false;
+            }
+            return vm.selectedOrder.details.some(function (detail) {
+                return detail.user.id === UserModel.user.id
+            })
+        };
+
+        this.findUserOrder = function () {
+            for (var index in vm.selectedOrder.details) {
+                if (vm.selectedOrder.details[index].user.id === UserModel.user.id) {
+                    return vm.selectedOrder.details[index];
+                }
+            }
+            throw Error('User not found in order');
+        };
+
+        this.addFoodItem = function () {
+
+//            this.findUserOrder().order[index].push(food);
+
+//            console.log(vm.orders);
+            console.log(this.findUserOrder().order);
+
+            vm.orders.$save(vm.selectedOrder);
+
+            this.findUserOrder().order.push({});
+        };
+
+        this.removeFoodItem = function (index) {
+            this.findUserOrder().order[index].splice(index, 1);
+            console.log(vm.orders);
+            vm.orders.$save(vm.selectedOrder);
         };
 
         this.getOrderTotals = function () {

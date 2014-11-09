@@ -11,35 +11,59 @@
             <label for="selectOrder" class="col-sm-2 control-label">Select Order</label>
             <select name="selectOrder" id="selectOrder"
                     ng-model="vm.selectedOrder"
-                    ng-options="order as order.name for order in vm.orders">
+                    ng-options="order as (order.name + ' - '  + order.restaurant.name) for order in vm.orders">
             </select>
+            <button ng-click="vm.selectedOrder = null">Clear</button>
         </div>
 
-        <div ng-repeat="selctedFood in vm.selectedOrder.content">
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Item</label>
-                <select name="selectUser" id="selectUser"
-                        ng-model="vm.myOrder.foods[$index].user"
-                        ng-options="user for user in vm.availableUsers">
-                </select>
-                <select name="selectMenu"
-                        ng-model="vm.myOrder.foods[$index].food"
-                        ng-options="food as (food.name + ' - £' + ((food.price / 100).toFixed(2)) ) for food in vm.selectedRestaurant.foods">
-                </select>
-                <button ng-click="vm.removeFoodItem($index, selctedFood)">-</button>
-                <button ng-click="vm.addFoodItem()" ng-show="$last">+</button>
-            </div>
+        <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
+            Please select an <strong>order</strong> to amend!
         </div>
 
-        <hr />
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Confirm Order</button>
-            </div>
-            Order Total: {{vm.getOrderTotals()}}
+        <div class="alert alert-success" role="alert" ng-show="vm.selectedOrder">
+            Your adding to the order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
         </div>
+
+
+        <div class="alert alert-warning" role="alert" ng-if="vm.selectedOrder && !vm.userHasOrder()">
+            You don't have any items, please <a ng-click="vm.initOrderForUser()">add one!</a>
+        </div>
+
     </form>
+
+    <div class="col-sm-12" ng-if="vm.userHasOrder()">
+
+        <div class="col-sm-6">
+            Your Orders:
+
+            <!--{{vm.findUserOrder()}}-->
+
+            {{vm.findUserOrder().order}}
+
+            <div ng-repeat="item in vm.findUserOrder().order track by $index">
+                <!--{{vm.findUserOrder().order[$index]}}-->
+                {{item}}
+                <div class="form-group">
+                    <select name="selectMenu"
+                            ng-model="vm.findUserOrder().order[$index]"
+                            ng-options="food as (food.name + ' - £' + ((food.price / 100).toFixed(2))) for food in vm.selectedOrder.restaurant.foods">
+                    </select>
+                    <button ng-click="vm.removeFoodItem($index)">-</button>
+                    <button ng-click="vm.addFoodItem()" ng-show="$last">+</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+            The orders:<br/>
+            <pre>{{vm.selectedOrder | json}}</pre>
+            <hr/>
+            <div class="form-group">
+                Order Total: {{vm.getOrderTotals()}}
+            </div>
+
+        </div>
+    </div>
 
 </div>
