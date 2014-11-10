@@ -12,7 +12,7 @@
         // ViewModel
         var vm = this;
 
-        vm.user = UserModel.user;
+        vm.userModel = UserModel;
 
         var ref = new Firebase("https://bug-free-food.firebaseio.com/orders");
         var sync = $firebase(ref);
@@ -24,6 +24,10 @@
 
         vm.selectedOrder = undefined;
 
+        vm.newOrderItemForm = undefined;
+
+        vm.totalCounts = {};
+
         // The data form
         vm.myOrder = {
             foods: []
@@ -34,9 +38,7 @@
                 vm.selectedOrder.details = [
                     {
                         user: UserModel.user,
-                        order: [
-                            {}
-                        ]
+                        order: []
                     }
                 ]
             }
@@ -61,33 +63,67 @@
         };
 
         this.addFoodItem = function () {
+            var userOrder = this.findUserOrder();
 
-            vm.orders.$save(vm.selectedOrder).then(function () {
-                NotifyService.success('Added ' + self.findUserOrder().order[self.findUserOrder().order.length - 1].name);
-                self.findUserOrder().order.push({});
-            });
+            if (!userOrder.order) {
+                userOrder.order = [];
+            }
+            userOrder.order.push(vm.newOrderItemForm);
+            vm.orders.$save(vm.selectedOrder)
+                .then(function () {
+                    NotifyService.success('Added ' + userOrder.order[userOrder.order.length - 1].name);
+                    vm.newOrderItemForm = undefined;
+                    self.updatePageTotals();
+                });
         };
 
         this.removeFoodItem = function (index) {
-            this.findUserOrder().order[index].splice(index, 1);
-            console.log(vm.orders);
-            vm.orders.$save(vm.selectedOrder).then(function () {
-                NotifyService.success('Item removed');
-            });
+            this.findUserOrder().order.splice(index, 1);
+            vm.orders.$save(vm.selectedOrder)
+                .then(function () {
+                    NotifyService.success('Item removed');
+                    self.updatePageTotals();
+                });
         };
 
         this.getOrderTotals = function () {
-            if (!vm.myOrder.foods || vm.myOrder.foods.length <= 0) {
+            if (!vm.selectedOrder.details || vm.selectedOrder.details.length <= 0) {
                 return 0;
             }
             var total = 0;
-            vm.myOrder.foods.forEach(function (item) {
-                if (item.food && item.food.price) {
-                    total += item.food.price;
+            vm.selectedOrder.details.forEach(function (detail) {
+                if (detail.order) {
+                    detail.order.forEach(function (order) {
+                        total += order.price;
+                    });
                 }
             });
             return (total / 100).toFixed(2);
         };
+
+
+        this.updatePageTotals = function () {
+            if (!vm.selectedOrder.details || vm.selectedOrder.details.length <= 0) {
+                return;
+            }
+
+            vm.totalCounts = {};
+            vm.selectedOrder.details.forEach(function (detail) {
+                if (detail.order) {
+                    detail.order.forEach(function (order) {
+                        if (!vm.totalCounts[order.name]) {
+                            vm.totalCounts[order.name] = {
+                                name: order.name,
+                                price: order.price,
+                                count: 1
+                            };
+                        } else {
+                            vm.totalCounts[order.name].count++;
+                        }
+                    });
+                }
+            });
+        }
     }
 
     angular

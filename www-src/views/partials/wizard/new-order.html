@@ -5,65 +5,103 @@
 
     <!--<pre>{{vm.selectedOrder | json}}</pre>-->
 
-    <form class="form-horizontal" role="form" name="form" novalidate>
+    <div class="row">
+        <div class="col-sm-12">
 
-        <div class="form-group">
-            <label for="selectOrder" class="col-sm-2 control-label">Select Order</label>
-            <select name="selectOrder" id="selectOrder"
-                    ng-model="vm.selectedOrder"
-                    ng-options="order as (order.name + ' - '  + order.restaurant.name) for order in vm.orders">
-            </select>
-            <button ng-click="vm.selectedOrder = null">Clear</button>
-        </div>
-
-        <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
-            Please select an <strong>order</strong> to amend!
-        </div>
-
-        <div class="alert alert-success" role="alert" ng-show="vm.selectedOrder">
-            Your adding to the order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
-        </div>
-
-
-        <div class="alert alert-warning" role="alert" ng-if="vm.selectedOrder && !vm.userHasOrder()">
-            You don't have any items, please <a ng-click="vm.initOrderForUser()">add one!</a>
-        </div>
-
-    </form>
-
-    <div class="col-sm-12" ng-if="vm.userHasOrder()">
-
-        <div class="col-sm-6">
-            Your Orders: ({{vm.findUserOrder().order.length}})
-
-            <!--{{vm.findUserOrder()}}-->
-
-            <div ng-repeat="item in vm.findUserOrder().order track by $index">
+            <form class="form-inline" role="form" name="addOrderItemForm" novalidate>
                 <div class="form-group">
-                    <select name="selectMenu"
-                            required
-                            ng-model="vm.findUserOrder().order[$index]"
-                            ng-options="food as (food.name + ' - £' + ((food.price / 100).toFixed(2))) for food in vm.selectedOrder.restaurant.foods">
+                    <label for="selectOrder" class="control-label">Select Order</label>
+                    <select class="form-control"
+                            name="selectOrder" id="selectOrder"
+                            ng-model="vm.selectedOrder"
+                            ng-change="vm.updatePageTotals()"
+                            ng-options="order as (order.name + ' - '  + order.restaurant.name) for order in vm.orders">>
                     </select>
-                    <button ng-click="vm.removeFoodItem($index)">-</button>
-                    <button ng-click="vm.addFoodItem()"
-                            ng-show="$last">+
-                    </button>
                 </div>
-            </div>
-
-        </div>
-
-        <div class="col-sm-6">
-            The orders:<br/>
-            <pre>{{vm.findUserOrder().order | json}}</pre>
-            <pre>{{vm.selectedOrder | json}}</pre>
-            <hr/>
-            <div class="form-group">
-                Order Total: {{vm.getOrderTotals()}}
-            </div>
+                <button type="submit" class="btn btn-info"
+                        ng-click="vm.selectedOrder = null">Clear
+                </button>
+            </form>
 
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-12">
+            <p>
+
+            <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
+                Please select an <strong>order</strong> to amend!
+            </div>
+
+            <div class="alert alert-success" role="alert" ng-show="vm.selectedOrder">
+                Your adding to the order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
+            </div>
+
+            <div class="alert alert-warning" role="alert" ng-if="vm.selectedOrder && !vm.userHasOrder()">
+                You don't have any items, please <a ng-click="vm.initOrderForUser()">add one!</a>
+            </div>
+
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="row" ng-if="vm.userHasOrder()">
+
+        <div class="col-sm-6">
+            Your Orders: ({{vm.findUserOrder().order.length}})
+
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in vm.findUserOrder().order">
+                    <span class="btn badge" ng-click="vm.removeFoodItem($index)">-</span>
+                    <span class="badge">£{{(item.price / 100).toFixed(2)}}</span>
+                    {{item.name}}
+                </li>
+            </ul>
+
+            <form class="form-inline" role="form" name="addOrderItemForm" novalidate>
+                <div class="form-group">
+                    <select class="form-control"
+                            name="selectMenu"
+                            required
+                            ng-model="vm.newOrderItemForm"
+                            ng-options="(food.name + ' - £' + ((food.price / 100).toFixed(2))) for food in vm.selectedOrder.restaurant.foods">
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-info"
+                        ng-disabled="addOrderItemForm.$invalid"
+                        ng-click="vm.addFoodItem(vm.newOrderItemForm)">Add
+                </button>
+            </form>
+
+        </div>
+
+        <div class="col-sm-6" ng-show="vm.selectedOrder.details">
+            All Orders:
+            <!--<pre>{{vm.findUserOrder().order | json}}</pre>-->
+            <!--<pre>{{vm.selectedOrder.details | json}}</pre>-->
+
+            <ul class="list-group" ng-repeat="detail in vm.selectedOrder.details track by $index">
+                <li class="list-group-item" ng-repeat="food in detail.order track by $index">
+                    <span class="badge">£{{((food.price / 100).toFixed(2))}}</span>
+                    {{detail.user.displayName}} - {{food.name}}
+                </li>
+            </ul>
+            <hr/>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="foodItem in vm.totalCounts">
+                    <span class="badge">{{foodItem.count}} X </span>
+                    <span class="badge">£{{(foodItem.price / 100).toFixed(2)}}</span>
+                    {{foodItem.name}}
+                </li>
+            </ul>
+            <hr/>
+            <div class="form-group">
+                Order Total: £{{vm.getOrderTotals()}}
+            </div>
+        </div>
+
+    </div>
 </div>

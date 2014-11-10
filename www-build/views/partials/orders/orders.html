@@ -3,33 +3,42 @@
 
     <h2 class="sub-header">Fill in the form appropriately</h2>
 
+    <div class="form-group">
+        <div class="alert alert-warning" role="alert" ng-show="!vm.userModel.user">
+            You must <strong>login</strong> to create an order!
+        </div>
+        <div class="alert alert-success" role="alert" ng-show="vm.userModel.user">
+            Welcome <strong>{{vm.userModel.user.displayName}}</strong>
+        </div>
+    </div>
+
     <form role="form">
         <!--<pre>{{vm.newOrder | json}}</pre>-->
         <div class="form-group">
             <label for="newOrderRestaurant">Select Restaurant</label>
             <select name="newOrderRestaurant" id="newOrderRestaurant"
                     ng-model="vm.newOrder.restaurant"
+                    ng-disabled="!vm.userModel.user"
                     ng-options="restaurant as restaurant.name for restaurant in vm.availableRestaurants">
             </select>
         </div>
         <div class="form-group">
             <label for="newOrderName">Name</label>
             <input type="text" class="form-control" id="newOrderName" placeholder="Name..."
+                   ng-disabled="!vm.userModel.user"
                    ng-model="vm.newOrder.name">
         </div>
-        <div class="form-group">
-            <label for="newOrderCreatedBy">Created By</label>
-            <select name="newOrderCreatedBy" id="newOrderCreatedBy"
-                    ng-model="vm.newOrder.createdBy"
-                    ng-options="user for user in vm.availableUsers">
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-default" ng-click="vm.createOrder();">Add</button>
+        <button type="submit" class="btn btn-default"
+                ng-disabled="!vm.userModel.user"
+                ng-click="vm.createOrder();">
+            Add
+        </button>
     </form>
 
     <ul ng-repeat="order in vm.orders">
-        <li>{{order.name}} - {{order.restaurant.name}}  - {{order.createdDate | date:'medium'}} - <a class="btn btn-sm" ng-click="vm.removeOrder(order)">X</a> </li>
+        <li>{{order.name}} - {{order.restaurant.name}} - {{order.createdDate | date:'medium'}} - <a class="btn btn-sm"
+                                                                                                    ng-click="vm.removeOrder(order)">X</a>
+        </li>
     </ul>
 
 </div>

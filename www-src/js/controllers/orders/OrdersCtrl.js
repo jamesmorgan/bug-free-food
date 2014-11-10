@@ -5,13 +5,15 @@
     /**
      * @ngInject
      */
-    function OrdersCtrl($log, NotifyService, Firebase, $firebase) {
+    function OrdersCtrl($log, NotifyService, Firebase, $firebase, UserModel) {
 
         // ViewModel
         var vm = this;
 
         var ref = new Firebase("https://bug-free-food.firebaseio.com/orders");
         var sync = $firebase(ref);
+
+        vm.userModel = UserModel;
 
         vm.orders = sync.$asArray();
 
@@ -47,6 +49,10 @@
         ];
 
         this.createOrder = function () {
+
+            // Set the user
+            vm.newOrder.createdBy = UserModel.user;
+
             vm.orders.$add(angular.copy(vm.newOrder))
                 .then(function () {
                     NotifyService.success('Successfully added order');
@@ -67,7 +73,7 @@
 
         function resetForm() {
             vm.newOrder = {
-                createdBy: '',
+                createdBy: UserModel.user,
                 name: '',
                 restaurant: '',
                 content: [

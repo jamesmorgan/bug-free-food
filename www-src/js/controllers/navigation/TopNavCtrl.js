@@ -12,7 +12,7 @@
 
         var ref = new Firebase("https://bug-free-food.firebaseio.com");
 
-        vm.currentUser = UserModel.user;
+        vm.userModel = UserModel;
 
         var authClient = $firebaseSimpleLogin(ref);
         console.log(authClient);
@@ -32,14 +32,12 @@
             $log.debug('Logout');
             console.log(authClient);
             authClient.$logout();
-            vm.currentUser = null;
             UserModel.user = null;
             NotifyService.success('user is logged out');
         };
 
         function handleSuccessfulLogin(user) {
             if (user) {
-                vm.currentUser = user;
                 UserModel.user = user;
                 $log.debug("User ID: " + user.uid + ", Provider: " + user.provider);
                 NotifyService.success("User ID: " + user.uid + ", Provider: " + user.provider);
