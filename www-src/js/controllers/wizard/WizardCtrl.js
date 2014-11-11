@@ -36,7 +36,7 @@
                 order: []
             };
 
-            if (hasOrderWithDetails()()) {
+            if (hasOrderWithDetails()) {
                 vm.selectedOrder.details.push(orderDetail);
             } else {
                 vm.selectedOrder.details = [orderDetail]
@@ -62,12 +62,6 @@
                 throw new Error('User not found in order!');
             }
             return userDetails[0];
-//            for (var index in vm.selectedOrder.details) {
-//                if (vm.selectedOrder.details[index].user.id === UserModel.user.id) {
-//                    return vm.selectedOrder.details[index];
-//                }
-//            }
-//            throw Error('User not found in order');
         };
 
         this.addFoodItem = function () {

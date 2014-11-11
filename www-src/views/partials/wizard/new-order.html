@@ -25,7 +25,8 @@
                 </div>
                 <button type="submit" class="btn btn-info"
                         ng-disabled="!vm.userModel.user || !vm.selectedOrder"
-                        ng-click="vm.selectedOrder = null">Clear
+                        ng-click="vm.selectedOrder = null">
+                    <span class="glyphicon glyphicon-trash"></span> Clear
                 </button>
             </form>
 
@@ -78,7 +79,8 @@
                 </div>
                 <button type="submit" class="btn btn-info"
                         ng-disabled="addOrderItemForm.$invalid"
-                        ng-click="vm.addFoodItem(vm.newOrderItemForm)">Add
+                        ng-click="vm.addFoodItem(vm.newOrderItemForm)">
+                    <span class="glyphicon glyphicon-plus"></span> Add
                 </button>
             </form>
 
