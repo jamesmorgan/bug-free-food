@@ -75,9 +75,10 @@ gulp.task('build-app-js', ['lint'], function () {
         .pipe(sourcemaps.init())
         .pipe(concat('app.min.js'))
         .pipe(ngAnnotate())
-        .pipe(uglify({
-            mangle: false
-        }))
+        //TODO wrap uglification in env variable or only run on gulp dev
+//        .pipe(uglify({
+//            mangle: false
+//        }))
         .pipe(sourcemaps.write({
             sourceRoot: 'app'
         }))

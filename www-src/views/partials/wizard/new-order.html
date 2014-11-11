@@ -8,6 +8,10 @@
     <div class="row">
         <div class="col-sm-12">
 
+            <div class="alert alert-danger" role="alert" ng-if="!vm.userModel.user">
+                You must be <strong>logged in</strong>!
+            </div>
+
             <form class="form-inline" role="form" name="addOrderItemForm" novalidate>
                 <div class="form-group">
                     <label for="selectOrder" class="control-label">Select Order</label>
@@ -15,10 +19,12 @@
                             name="selectOrder" id="selectOrder"
                             ng-model="vm.selectedOrder"
                             ng-change="vm.updatePageTotals()"
+                            ng-disabled="!vm.userModel.user"
                             ng-options="order as (order.name + ' - '  + order.restaurant.name) for order in vm.orders">>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-info"
+                        ng-disabled="!vm.userModel.user || !vm.selectedOrder"
                         ng-click="vm.selectedOrder = null">Clear
                 </button>
             </form>
@@ -27,7 +33,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12" ng-if="vm.userModel.user">
             <p>
 
             <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
@@ -48,9 +54,9 @@
     </div>
 
 
-    <div class="row" ng-if="vm.userHasOrder()">
+    <div class="row">
 
-        <div class="col-sm-6">
+        <div class="col-sm-6" ng-if="vm.userHasOrder()">
             Your Orders: ({{vm.findUserOrder().order.length}})
 
             <ul class="list-group">

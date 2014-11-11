@@ -19,9 +19,6 @@
 
         vm.orders = sync.$asArray();
 
-        // Employees
-        vm.availableUsers = ['James Morgan', 'Andy Gray', 'Simon Souter', 'Alex Lashford'];
-
         vm.selectedOrder = undefined;
 
         vm.newOrderItemForm = undefined;
@@ -34,32 +31,43 @@
         };
 
         this.initOrderForUser = function () {
-            if (!vm.selectedOrder.details) {
-                vm.selectedOrder.details = [
-                    {
-                        user: UserModel.user,
-                        order: []
-                    }
-                ]
+            var orderDetail = {
+                user: UserModel.user,
+                order: []
+            };
+
+            if (hasOrderWithDetails()()) {
+                vm.selectedOrder.details.push(orderDetail);
+            } else {
+                vm.selectedOrder.details = [orderDetail]
             }
         };
 
         this.userHasOrder = function () {
-            if (!vm.selectedOrder || !vm.selectedOrder.details || !UserModel.user) {
+            if (!hasOrderWithDetails() || !UserModel.user) {
                 return false;
             }
+
             return vm.selectedOrder.details.some(function (detail) {
                 return detail.user.id === UserModel.user.id
             })
         };
 
         this.findUserOrder = function () {
-            for (var index in vm.selectedOrder.details) {
-                if (vm.selectedOrder.details[index].user.id === UserModel.user.id) {
-                    return vm.selectedOrder.details[index];
-                }
+            var userDetails = vm.selectedOrder.details.filter(function (detail) {
+                return detail.user.id === UserModel.user.id
+            });
+
+            if (userDetails.length === 0) {
+                throw new Error('User not found in order!');
             }
-            throw Error('User not found in order');
+            return userDetails[0];
+//            for (var index in vm.selectedOrder.details) {
+//                if (vm.selectedOrder.details[index].user.id === UserModel.user.id) {
+//                    return vm.selectedOrder.details[index];
+//                }
+//            }
+//            throw Error('User not found in order');
         };
 
         this.addFoodItem = function () {
@@ -87,7 +95,7 @@
         };
 
         this.getOrderTotals = function () {
-            if (!vm.selectedOrder.details || vm.selectedOrder.details.length <= 0) {
+            if (!hasOrderWithDetails() || vm.selectedOrder.details.length <= 0) {
                 return 0;
             }
             var total = 0;
@@ -101,9 +109,8 @@
             return (total / 100).toFixed(2);
         };
 
-
         this.updatePageTotals = function () {
-            if (!vm.selectedOrder.details || vm.selectedOrder.details.length <= 0) {
+            if (!hasOrderWithDetails() || vm.selectedOrder.details.length <= 0) {
                 return;
             }
 
@@ -123,7 +130,12 @@
                     });
                 }
             });
+        };
+
+        function hasOrderWithDetails() {
+            return vm.selectedOrder && vm.selectedOrder.details;
         }
+
     }
 
     angular
