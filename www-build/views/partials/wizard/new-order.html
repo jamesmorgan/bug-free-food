@@ -1,9 +1,12 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Make a new order</h1>
-
-    <h2 class="sub-header">Order my food, bug free....</h2>
 
     <!--<pre>{{vm.selectedOrder | json}}</pre>-->
+
+    <div class="page-header">
+        <h1>Make your order
+            <small>bug free...</small>
+        </h1>
+    </div>
 
     <div class="row">
         <div class="col-sm-12">
@@ -58,11 +61,11 @@
     <div class="row">
 
         <div class="col-sm-6" ng-if="vm.userHasOrder()">
-            Your Orders: ({{vm.findUserOrder().order.length}})
+            <h5>Your Orders <span class="badge">{{vm.findUserOrder().order.length || 0}}</span></h5>
 
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in vm.findUserOrder().order">
-                    <span class="btn badge" ng-click="vm.removeFoodItem($index)">-</span>
+                    <span class="btn badge" ng-click="vm.removeFoodItem($index, item)">-</span>
                     <span class="badge">£{{(item.price / 100).toFixed(2)}}</span>
                     {{item.name}}
                 </li>
@@ -82,12 +85,15 @@
                         ng-click="vm.addFoodItem(vm.newOrderItemForm)">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </button>
+                <div class="form-group pull-right">
+                    <h4> Your total: £{{vm.getUsersOrder()}}</h4>
+                </div>
             </form>
 
         </div>
 
         <div class="col-sm-6" ng-show="vm.selectedOrder.details">
-            All Orders:
+            <h5>All Orders</h5>
             <!--<pre>{{vm.findUserOrder().order | json}}</pre>-->
             <!--<pre>{{vm.selectedOrder.details | json}}</pre>-->
 
@@ -107,7 +113,7 @@
             </ul>
             <hr/>
             <div class="form-group">
-                Order Total: £{{vm.getOrderTotals()}}
+                <h4>Order Total: £{{vm.getOrderTotals()}}</h4>
             </div>
         </div>
 

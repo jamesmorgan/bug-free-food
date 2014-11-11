@@ -73,19 +73,30 @@
             userOrder.order.push(vm.newOrderItemForm);
             vm.orders.$save(vm.selectedOrder)
                 .then(function () {
-                    NotifyService.success('Added ' + userOrder.order[userOrder.order.length - 1].name);
+                    NotifyService.success('Added ' + userOrder.order[userOrder.order.length - 1].name + ' to the order!');
                     vm.newOrderItemForm = undefined;
                     self.updatePageTotals();
                 });
         };
 
-        this.removeFoodItem = function (index) {
+        this.removeFoodItem = function (index, item) {
             this.findUserOrder().order.splice(index, 1);
             vm.orders.$save(vm.selectedOrder)
                 .then(function () {
-                    NotifyService.success('Item removed');
+                    NotifyService.success('Removed ' + item.name + ' from the order!');
                     self.updatePageTotals();
                 });
+        };
+
+        this.getUsersOrder = function () {
+            if (!hasOrderWithDetails() || vm.selectedOrder.details.length <= 0) {
+                return 0;
+            }
+            var total = 0;
+            (vm.findUserOrder().order || []).forEach(function (item) {
+                total += item.price;
+            });
+            return (total / 100).toFixed(2);
         };
 
         this.getOrderTotals = function () {
