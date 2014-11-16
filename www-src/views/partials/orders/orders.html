@@ -12,33 +12,81 @@
         </div>
     </div>
 
-    <form role="form">
-        <!--<pre>{{vm.newOrder | json}}</pre>-->
-        <div class="form-group">
-            <label for="newOrderRestaurant">Select Restaurant</label>
-            <select name="newOrderRestaurant" id="newOrderRestaurant"
-                    ng-model="vm.newOrder.restaurant"
-                    ng-disabled="!vm.userModel.user"
-                    ng-options="restaurant as restaurant.name for restaurant in vm.availableRestaurants">
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="newOrderName">Name</label>
-            <input type="text" class="form-control" id="newOrderName" placeholder="Name..."
-                   ng-disabled="!vm.userModel.user"
-                   ng-model="vm.newOrder.name">
-        </div>
-        <button type="submit" class="btn btn-default"
-                ng-disabled="!vm.userModel.user"
-                ng-click="vm.createOrder();">
-            Add
-        </button>
-    </form>
+    <div class="row">
+        <div class="col-sm-12">
 
-    <ul ng-repeat="order in vm.orders">
-        <li>{{order.name}} - {{order.restaurant.name}} - {{order.createdDate | date:'medium'}} - <a class="btn btn-sm"
-                                                                                                    ng-click="vm.removeOrder(order)">X</a>
-        </li>
-    </ul>
+            <form name="createOrderForm" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="newOrderRestaurant" class="col-sm-2 control-label">Select Restaurant</label>
+
+                    <div class="col-sm-10">
+                        <select name="newOrderRestaurant" id="newOrderRestaurant" class="form-control"
+                                ng-model="vm.newOrder.restaurant"
+                                ng-disabled="!vm.userModel.user"
+                                required
+                                ng-options="restaurant as restaurant.name for restaurant in vm.availableRestaurants">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="newOrderName" class="col-sm-2 control-label">Name</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="newOrderName" placeholder="Name..."
+                               ng-disabled="!vm.userModel.user"
+                               required
+                               ng-model="vm.newOrder.name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary"
+                                ng-disabled="!vm.userModel.user || createOrderForm.$invalid"
+                                ng-click="vm.createOrder();">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Create
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" ng-show="vm.orders.length > 0">
+
+            <h4>Existing Orders</h4>
+
+            <div class="panel panel-default">
+                <table class="table table-hover" ng-repeat="order in vm.orders">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-file"></span>
+                            <span>{{order.name}} - {{order.restaurant.name}}</span>
+                            <span class="pull-right">{{order.createdDate | date:'medium'}}</span>
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-xs btn-info" href="/#/order-wizard/place-order/{{order.$id}}">View</a>
+                            <button class="btn btn-xs btn-warning">
+                                <span class="glyphicon glyphicon-trash" ng-click="vm.removeOrder(order)"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--<div class="list-group">-->
+            <!--<a href="#" class="list-group-item" ng-repeat="order in vm.orders">-->
+            <!--<h4 class="list-group-item-heading">{{order.name}} - {{order.restaurant.name}}</h4>-->
+            <!--<p class="list-group-item-text">-->
+            <!--{{order.createdDate | date:'medium'}} - <a ng-click="vm.removeOrder(order)">X</a>-->
+            <!--</p>-->
+            <!--</a>-->
+            <!--</div>-->
+
+        </div>
+    </div>
 
 </div>
