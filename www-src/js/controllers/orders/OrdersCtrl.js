@@ -22,8 +22,11 @@
         // Available page configuration
         vm.availableRestaurants = [
             {
-                name: 'Abduls Levenshulme',
-                openingTimes: '...',
+                name: 'Abduls Fallowfield',
+                openingTimes: 'Mon - Sun - 4pm - 3:30am',
+                contactNumber: '0161 248 7573',
+                address: '324 Wilmslow Rd, Manchester M14 6XQ',
+                directionLink: "https://www.google.co.uk/maps/dir/''/abduls+Fallowfield/@53.4404063,-2.2884381,12z/data=!3m1!4b1!4m8!4m7!1m0!1m5!1m1!1s0x487bb230d2757a57:0x5ef709045f361c95!2m2!1d-2.219772!2d53.440426",
                 foods: [
                     {name: 'Small Chicken Naan', price: 380},
                     {name: 'Small Chicken Chapatti', price: 300},

@@ -5,17 +5,31 @@
 
     <div class="row">
         <div class="col-sm-12" ng-if="vm.userModel.user">
-            <p>
 
             <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
-                Please select an <strong>order</strong> to amend!
+                You must have a real <strong>order</strong> to place!
             </div>
 
             <div class="alert alert-info" role="alert" ng-show="vm.selectedOrder">
                 Placing order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
             </div>
 
-            </p>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{vm.selectedOrder.restaurant.name}}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        {{vm.selectedOrder.restaurant.address}}
+                    </p>
+                    <p>
+                        {{vm.selectedOrder.restaurant.openingTimes}}
+                    </p>
+                    <p>
+                        <strong>{{vm.selectedOrder.restaurant.contactNumber}}</strong> - <a target="_blank" href="{{vm.selectedOrder.restaurant.directionLink}}">directions</a>
+                    </p>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -29,7 +43,7 @@
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="foodItem in vm.totalCounts">
                     <span class="label label-info">x{{foodItem.count}}</span>
-                     {{foodItem.name}}
+                    {{foodItem.name}}
                     <span class="badge">£{{(foodItem.price / 100).toFixed(2)}}</span>
                 </li>
             </ul>
@@ -45,17 +59,17 @@
             <!--<pre>{{vm.selectedOrder.details | json}}</pre>-->
 
             <!--<div class="panel panel-default" ng-repeat="detail in vm.selectedOrder.details track by $index">-->
-                <!--<div class="panel-heading">-->
-                    <!--<h3 class="panel-title">{{detail.user.displayName}}</h3>-->
-                <!--</div>-->
-                <!--<div class="panel-body">-->
-                    <!--<ul class="list-group">-->
-                        <!--<li class="list-group-item" ng-repeat="food in detail.order track by $index">-->
-                            <!--<span class="badge">£{{((food.price / 100).toFixed(2))}}</span>-->
-                            <!--{{food.name}}-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
+            <!--<div class="panel-heading">-->
+            <!--<h3 class="panel-title">{{detail.user.displayName}}</h3>-->
+            <!--</div>-->
+            <!--<div class="panel-body">-->
+            <!--<ul class="list-group">-->
+            <!--<li class="list-group-item" ng-repeat="food in detail.order track by $index">-->
+            <!--<span class="badge">£{{((food.price / 100).toFixed(2))}}</span>-->
+            <!--{{food.name}}-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
             <!--</div>-->
 
             <ul class="list-group" ng-repeat="detail in vm.selectedOrder.details track by $index">
