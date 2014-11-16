@@ -5,18 +5,24 @@
     /**
      * @ngInject
      */
-    function MyOrderCtrl($log, NotifyService, fbutil, UserModel) {
+    function MyOrderCtrl($log, $routeParams, NotifyService, fbutil, UserModel) {
 
         // ViewModel
         var vm = this;
 
+        vm.optionalOrderId = $routeParams.orderId;
+
         vm.userModel = UserModel;
-
-        vm.orders = fbutil.syncArray('orders');
-
         vm.selectedOrder = undefined;
-
         vm.newOrderItemForm = undefined;
+        vm.orders = undefined;
+
+//        if (vm.optionalOrderId) {
+//            $log.debug('Attempting to get order for ref [%]', vm.optionalOrderId);
+//            vm.selectedOrder = fbutil.syncObject('orders/' + vm.optionalOrderId);
+//        }
+//        $log.debug('Loading all orders');
+//        vm.orders = fbutil.syncArray('orders');
 
         // The data form
         vm.myOrder = {

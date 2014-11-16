@@ -15,7 +15,7 @@
                 You must be <strong>logged in</strong>!
             </div>
 
-            <form class="form-inline" role="form" name="addOrderItemForm" novalidate>
+            <form class="form-inline" role="form" name="addOrderItemForm" novalidate ng-show="!vm.optionalOrderId">
                 <div class="form-group">
                     <label for="selectOrder" class="control-label">Select Order</label>
                     <select class="form-control"

@@ -1,7 +1,10 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Create A New Order</h1>
 
-    <h2 class="sub-header">Fill in the form appropriately</h2>
+    <div class="page-header">
+        <h1>Start a new order
+            <small>pick a restaurant and name...</small>
+        </h1>
+    </div>
 
     <div class="form-group">
         <div class="alert alert-warning" role="alert" ng-show="!vm.userModel.user">
@@ -67,7 +70,8 @@
                             <span class="pull-right">{{order.createdDate | date:'medium'}}</span>
                         </td>
                         <td class="text-right">
-                            <a class="btn btn-xs btn-info" href="/#/order-wizard/place-order/{{order.$id}}"><i class="glyphicon glyphicon-shopping-cart">View</i></a>
+                            <a class="btn btn-xs btn-primary" href="/#/order-wizard/my-order/{{order.$id}}"><i class="glyphicon glyphicon-shopping-cart">Edit</i></a>
+                            <a class="btn btn-xs btn-info" href="/#/order-wizard/place-order/{{order.$id}}"><i class="glyphicon glyphicon-eye-open">View</i></a>
                             <button class="btn btn-xs btn-warning">
                                 <span class="glyphicon glyphicon-trash" ng-click="vm.removeOrder(order)"></span>
                             </button>

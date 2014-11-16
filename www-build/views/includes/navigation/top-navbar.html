@@ -20,7 +20,10 @@
                     <a ng-click="vm.logout()">Logout</a>
                 </li>
                 <li ng-if="vm.userModel.user">
-                    <a><span class="glyphicon glyphicon-user"></span> {{vm.userModel.user.displayName}}</a>
+                    <a><img alt="Brand" class="img-thumbnail img-responsive"
+                            width="25px"
+                            src="{{vm.userModel.user.thirdPartyUserData.avatar_url}}">
+                        {{vm.userModel.user.displayName}}</a>
                 </li>
             </ul>
         </div>

@@ -22,7 +22,7 @@
         /**
          * Order Wizard
          */
-        $routeProvider.when('/order-wizard/my-order', {
+        $routeProvider.when('/order-wizard/my-order/:orderId?', {
             templateUrl: 'www-build/views/partials/order-wizard/my-order.html',
             controller: 'MyOrderCtrl as vm'
         });
