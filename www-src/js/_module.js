@@ -6,6 +6,7 @@
         // 3rd Party
         'ngRoute',
         'firebase',
+        'ui.bootstrap',
         // 3rd party wrappers
         'app.libs.firebase.utils',
         // Internals

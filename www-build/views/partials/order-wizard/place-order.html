@@ -3,11 +3,57 @@
 
     <h2 class="sub-header">Bring the food...</h2>
 
-    <div class="form-group">
-        <div class="alert alert-warning" role="alert" ng-show="!vm.userModel.user">
-            You must <strong>login</strong> to create an order!
+    <div class="row">
+        <div class="col-sm-12" ng-if="vm.userModel.user">
+            <p>
+
+            <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
+                Please select an <strong>order</strong> to amend!
+            </div>
+
+            <div class="alert alert-info" role="alert" ng-show="vm.selectedOrder">
+                Placing order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
+            </div>
+
+            </p>
+
         </div>
     </div>
 
+    <div class="row">
+
+        <div class="col-sm-6" ng-show="vm.selectedOrder.details">
+
+            <h5>Complete Order</h5>
+
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="foodItem in vm.totalCounts">
+                    <span class="badge">{{foodItem.count}} X </span>
+                    <span class="badge">£{{(foodItem.price / 100).toFixed(2)}}</span>
+                    {{foodItem.name}}
+                </li>
+            </ul>
+            <hr/>
+            <div class="form-group">
+                <h4>Order Total: £{{vm.getOrderTotals()}}</h4>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6" ng-show="vm.selectedOrder.details">
+
+            <h5>All Orders</h5>
+            <!--<pre>{{vm.findUserOrder().order | json}}</pre>-->
+            <!--<pre>{{vm.selectedOrder.details | json}}</pre>-->
+
+            <ul class="list-group" ng-repeat="detail in vm.selectedOrder.details track by $index">
+                <li class="list-group-item" ng-repeat="food in detail.order track by $index">
+                    <span class="badge">£{{((food.price / 100).toFixed(2))}}</span>
+                    {{detail.user.displayName}} - {{food.name}}
+                </li>
+            </ul>
+        </div>
+
+    </div>
 
 </div>

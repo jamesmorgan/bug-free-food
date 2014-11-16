@@ -20,8 +20,6 @@
 
         vm.newOrderItemForm = undefined;
 
-        vm.totalCounts = {};
-
         // The data form
         vm.myOrder = {
             foods: []
@@ -94,44 +92,6 @@
                 total += item.price;
             });
             return (total / 100).toFixed(2);
-        };
-
-        this.getOrderTotals = function () {
-            if (!hasOrderWithDetails() || vm.selectedOrder.details.length <= 0) {
-                return 0;
-            }
-            var total = 0;
-            vm.selectedOrder.details.forEach(function (detail) {
-                if (detail.order) {
-                    detail.order.forEach(function (order) {
-                        total += order.price;
-                    });
-                }
-            });
-            return (total / 100).toFixed(2);
-        };
-
-        this.updatePageTotals = function () {
-            if (!hasOrderWithDetails() || vm.selectedOrder.details.length <= 0) {
-                return;
-            }
-
-            vm.totalCounts = {};
-            vm.selectedOrder.details.forEach(function (detail) {
-                if (detail.order) {
-                    detail.order.forEach(function (order) {
-                        if (!vm.totalCounts[order.name]) {
-                            vm.totalCounts[order.name] = {
-                                name: order.name,
-                                price: order.price,
-                                count: 1
-                            };
-                        } else {
-                            vm.totalCounts[order.name].count++;
-                        }
-                    });
-                }
-            });
         };
 
         function hasOrderWithDetails() {

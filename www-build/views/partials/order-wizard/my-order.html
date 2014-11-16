@@ -57,7 +57,6 @@
         </div>
     </div>
 
-
     <div class="row">
 
         <div class="col-sm-6" ng-if="vm.userHasOrder()">
@@ -93,28 +92,28 @@
         </div>
 
         <div class="col-sm-6" ng-show="vm.selectedOrder.details">
-            <h5>All Orders</h5>
-            <!--<pre>{{vm.findUserOrder().order | json}}</pre>-->
-            <!--<pre>{{vm.selectedOrder.details | json}}</pre>-->
 
-            <ul class="list-group" ng-repeat="detail in vm.selectedOrder.details track by $index">
-                <li class="list-group-item" ng-repeat="food in detail.order track by $index">
-                    <span class="badge">£{{((food.price / 100).toFixed(2))}}</span>
-                    {{detail.user.displayName}} - {{food.name}}
-                </li>
-            </ul>
-            <hr/>
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="foodItem in vm.totalCounts">
-                    <span class="badge">{{foodItem.count}} X </span>
-                    <span class="badge">£{{(foodItem.price / 100).toFixed(2)}}</span>
-                    {{foodItem.name}}
-                </li>
-            </ul>
-            <hr/>
-            <div class="form-group">
-                <h4>Order Total: £{{vm.getOrderTotals()}}</h4>
-            </div>
+            <h5>Who else is ordering?</h5>
+
+            <accordion close-others="true">
+                <accordion-group ng-repeat="detail in vm.selectedOrder.details track by $index">
+                    <accordion-heading>
+                        <span ng-click="status.open = !status.open">
+
+                            {{detail.user.id === vm.userModel.user.id ? detail.user.displayName + ' (my order)' : detail.user.displayName}} ({{detail.order.length}}) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        </span>
+                    </accordion-heading>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="food in detail.order track by $index">
+                            <span class="badge">£{{((food.price / 100).toFixed(2))}}</span>
+                            {{detail.user.displayName}} - {{food.name}}
+                        </li>
+                    </ul>
+                </accordion-group>
+            </accordion>
+
+            <a class="btn btn-large btn-success" href="/#/order-wizard/place-order/{{vm.selectedOrder.$id}}">Place Order</a>
+
         </div>
 
     </div>

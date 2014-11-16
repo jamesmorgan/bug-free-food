@@ -26,9 +26,9 @@
             templateUrl: '/www-build/views/partials/order-wizard/my-order.html',
             controller: 'WizardCtrl as vm'
         });
-        $routeProvider.when('/order-wizard/place-order', {
+        $routeProvider.when('/order-wizard/place-order/:orderId', {
             templateUrl: '/www-build/views/partials/order-wizard/place-order.html',
-            controller: 'WizardCtrl as vm'
+            controller: 'PlaceOrderCtrl as vm'
         });
 
         /**
