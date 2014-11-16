@@ -7,7 +7,7 @@
         'app.controllers.menus',
         'app.controllers.orders',
         'app.controllers.restaurant',
-        'app.controllers.wizard',
+        'app.controllers.order-wizard',
         'app.controllers.navigation'
     ]);
 

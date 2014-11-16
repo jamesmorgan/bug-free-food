@@ -5,17 +5,14 @@
     /**
      * @ngInject
      */
-    function OrdersCtrl($log, NotifyService, Firebase, $firebase, UserModel) {
+    function OrdersCtrl($log, fbutil, NotifyService, UserModel) {
 
         // ViewModel
         var vm = this;
 
-        var ref = new Firebase("https://bug-free-food.firebaseio.com/orders");
-        var sync = $firebase(ref);
+        vm.orders = fbutil.syncArray('orders');
 
         vm.userModel = UserModel;
-
-        vm.orders = sync.$asArray();
 
         resetForm();
 

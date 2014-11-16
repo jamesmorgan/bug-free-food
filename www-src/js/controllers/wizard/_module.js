@@ -2,6 +2,6 @@
 
 (function () {
 
-    angular.module('app.controllers.wizard', []);
+    angular.module('app.controllers.order-wizard', []);
 
 })();

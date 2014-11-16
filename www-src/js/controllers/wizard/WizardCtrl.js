@@ -5,7 +5,7 @@
     /**
      * @ngInject
      */
-    function WizardCtrl($log, NotifyService, Firebase, $firebase, UserModel) {
+    function WizardCtrl($log, NotifyService, fbutil, UserModel) {
 
         var self = this;
 
@@ -14,10 +14,7 @@
 
         vm.userModel = UserModel;
 
-        var ref = new Firebase("https://bug-free-food.firebaseio.com/orders");
-        var sync = $firebase(ref);
-
-        vm.orders = sync.$asArray();
+        vm.orders = fbutil.syncArray('orders');
 
         vm.selectedOrder = undefined;
 
@@ -144,7 +141,7 @@
     }
 
     angular
-        .module('app.controllers.wizard')
+        .module('app.controllers.order-wizard')
         .controller('WizardCtrl', WizardCtrl);
 
 })();

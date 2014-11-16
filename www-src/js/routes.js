@@ -20,33 +20,40 @@
         });
 
         /**
+         * Order Wizard
+         */
+        $routeProvider.when('/order-wizard/my-order', {
+            templateUrl: '/www-build/views/partials/order-wizard/my-order.html',
+            controller: 'WizardCtrl as vm'
+        });
+        $routeProvider.when('/order-wizard/place-order', {
+            templateUrl: '/www-build/views/partials/order-wizard/place-order.html',
+            controller: 'WizardCtrl as vm'
+        });
+
+        /**
          * Menus Management
          */
-        $routeProvider.when('/menus/list', {
-            templateUrl: '/www-build/views/partials/menus/menus.html',
-            controller: 'ListMenusCtrl as lmc'
-        });
-        $routeProvider.when('/menus/create', {
-            templateUrl: '/www-build/views/partials/menus/create.html',
-            controller: 'CreateMenuCtrl as cmc'
-        });
+//        $routeProvider.when('/menus/list', {
+//            templateUrl: '/www-build/views/partials/menus/menus.html',
+//            controller: 'ListMenusCtrl as lmc'
+//        });
+//        $routeProvider.when('/menus/create', {
+//            templateUrl: '/www-build/views/partials/menus/create.html',
+//            controller: 'CreateMenuCtrl as cmc'
+//        });
 
         /**
          * Restaurant Management
          */
-        $routeProvider.when('/restaurants/list', {
-            templateUrl: '/www-build/views/partials/restaurant/restaurant.html',
-            controller: 'ListRestaurantCtrl as lrc'
-        });
-        $routeProvider.when('/restaurants/create', {
-            templateUrl: '/www-build/views/partials/restaurant/create.html',
-            controller: 'CreateRestaurantCtrl as crc'
-        });
-
-        $routeProvider.when('/wizard/new-order', {
-            templateUrl: '/www-build/views/partials/wizard/new-order.html',
-            controller: 'WizardCtrl as vm'
-        });
+//        $routeProvider.when('/restaurants/list', {
+//            templateUrl: '/www-build/views/partials/restaurant/restaurant.html',
+//            controller: 'ListRestaurantCtrl as lrc'
+//        });
+//        $routeProvider.when('/restaurants/create', {
+//            templateUrl: '/www-build/views/partials/restaurant/create.html',
+//            controller: 'CreateRestaurantCtrl as crc'
+//        });
 
         /**
          * Fallback

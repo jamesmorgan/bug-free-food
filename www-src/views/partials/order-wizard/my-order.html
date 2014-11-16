@@ -1,0 +1,121 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    <!--<pre>{{vm.selectedOrder | json}}</pre>-->
+
+    <div class="page-header">
+        <h1>Make your order
+            <small>bug free...</small>
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="alert alert-danger" role="alert" ng-if="!vm.userModel.user">
+                You must be <strong>logged in</strong>!
+            </div>
+
+            <form class="form-inline" role="form" name="addOrderItemForm" novalidate>
+                <div class="form-group">
+                    <label for="selectOrder" class="control-label">Select Order</label>
+                    <select class="form-control"
+                            name="selectOrder" id="selectOrder"
+                            ng-model="vm.selectedOrder"
+                            ng-change="vm.updatePageTotals()"
+                            ng-disabled="!vm.userModel.user"
+                            ng-options="order as (order.name + ' - '  + order.restaurant.name) for order in vm.orders">>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-info"
+                        ng-disabled="!vm.userModel.user || !vm.selectedOrder"
+                        ng-click="vm.selectedOrder = null">
+                    <span class="glyphicon glyphicon-trash"></span> Clear
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" ng-if="vm.userModel.user">
+            <p>
+
+            <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
+                Please select an <strong>order</strong> to amend!
+            </div>
+
+            <div class="alert alert-success" role="alert" ng-show="vm.selectedOrder">
+                Your adding to the order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
+            </div>
+
+            <div class="alert alert-warning" role="alert" ng-if="vm.selectedOrder && !vm.userHasOrder()">
+                You don't have any items, please <a ng-click="vm.initOrderForUser()">add one!</a>
+            </div>
+
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-sm-6" ng-if="vm.userHasOrder()">
+            <h5>Your Orders <span class="badge">{{vm.findUserOrder().order.length || 0}}</span></h5>
+
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in vm.findUserOrder().order">
+                    <span class="btn badge" ng-click="vm.removeFoodItem($index, item)">-</span>
+                    <span class="badge">£{{(item.price / 100).toFixed(2)}}</span>
+                    {{item.name}}
+                </li>
+            </ul>
+
+            <form class="form-inline" role="form" name="addOrderItemForm" novalidate>
+                <div class="form-group">
+                    <select class="form-control"
+                            name="selectMenu"
+                            required
+                            ng-model="vm.newOrderItemForm"
+                            ng-options="(food.name + ' - £' + ((food.price / 100).toFixed(2))) for food in vm.selectedOrder.restaurant.foods">
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-info"
+                        ng-disabled="addOrderItemForm.$invalid"
+                        ng-click="vm.addFoodItem(vm.newOrderItemForm)">
+                    <span class="glyphicon glyphicon-plus"></span> Add
+                </button>
+                <div class="form-group pull-right">
+                    <h4> Your total: £{{vm.getUsersOrder()}}</h4>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="col-sm-6" ng-show="vm.selectedOrder.details">
+            <h5>All Orders</h5>
+            <!--<pre>{{vm.findUserOrder().order | json}}</pre>-->
+            <!--<pre>{{vm.selectedOrder.details | json}}</pre>-->
+
+            <ul class="list-group" ng-repeat="detail in vm.selectedOrder.details track by $index">
+                <li class="list-group-item" ng-repeat="food in detail.order track by $index">
+                    <span class="badge">£{{((food.price / 100).toFixed(2))}}</span>
+                    {{detail.user.displayName}} - {{food.name}}
+                </li>
+            </ul>
+            <hr/>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="foodItem in vm.totalCounts">
+                    <span class="badge">{{foodItem.count}} X </span>
+                    <span class="badge">£{{(foodItem.price / 100).toFixed(2)}}</span>
+                    {{foodItem.name}}
+                </li>
+            </ul>
+            <hr/>
+            <div class="form-group">
+                <h4>Order Total: £{{vm.getOrderTotals()}}</h4>
+            </div>
+        </div>
+
+    </div>
+</div>
