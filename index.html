@@ -2,7 +2,7 @@
 <html xml:lang="en" lang="en" id="ng-app" ng-app="app">
 <head>
     <meta charset="utf-8">
-    <!--<base href="/">-->
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Bug Free Food</title>
     <meta name="description" content="">
@@ -37,13 +37,13 @@
 
 <body>
 
-<div ng-controller="TopNavCtrl as vm" ng-include="'/www-build/views/includes/navigation/top-navbar.html'"></div>
+<div ng-controller="TopNavCtrl as vm" ng-include="'www-build/views/includes/navigation/top-navbar.html'"></div>
 
 <div class="container-fluid">
 
     <div class="row">
 
-        <div ng-include="'/www-build/views/includes/navigation/left-navbar.html'"></div>
+        <div ng-include="'www-build/views/includes/navigation/left-navbar.html'"></div>
 
         <div ng-view></div>
 
