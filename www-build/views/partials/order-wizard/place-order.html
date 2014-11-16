@@ -24,27 +24,39 @@
 
         <div class="col-sm-6" ng-show="vm.selectedOrder.details">
 
-            <h5>Complete Order</h5>
+            <h4>Complete Order</h4>
 
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="foodItem in vm.totalCounts">
-                    <span class="badge">{{foodItem.count}} X </span>
+                    <span class="label label-info">x{{foodItem.count}}</span>
+                     {{foodItem.name}}
                     <span class="badge">£{{(foodItem.price / 100).toFixed(2)}}</span>
-                    {{foodItem.name}}
                 </li>
             </ul>
-            <hr/>
-            <div class="form-group">
-                <h4>Order Total: £{{vm.getOrderTotals()}}</h4>
-            </div>
+
+            <h3 class="text-info pull-right">Order Total: £{{vm.getOrderTotals()}}</h3>
 
         </div>
 
         <div class="col-sm-6" ng-show="vm.selectedOrder.details">
 
-            <h5>All Orders</h5>
+            <h4>All Orders</h4>
             <!--<pre>{{vm.findUserOrder().order | json}}</pre>-->
             <!--<pre>{{vm.selectedOrder.details | json}}</pre>-->
+
+            <!--<div class="panel panel-default" ng-repeat="detail in vm.selectedOrder.details track by $index">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h3 class="panel-title">{{detail.user.displayName}}</h3>-->
+                <!--</div>-->
+                <!--<div class="panel-body">-->
+                    <!--<ul class="list-group">-->
+                        <!--<li class="list-group-item" ng-repeat="food in detail.order track by $index">-->
+                            <!--<span class="badge">£{{((food.price / 100).toFixed(2))}}</span>-->
+                            <!--{{food.name}}-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
 
             <ul class="list-group" ng-repeat="detail in vm.selectedOrder.details track by $index">
                 <li class="list-group-item" ng-repeat="food in detail.order track by $index">

@@ -89,18 +89,28 @@
                 </div>
             </form>
 
+            <div class="col-sm-12">
+                <hr />
+                <a class="btn btn-large btn-success pull-right"
+                   href="/#/order-wizard/place-order/{{vm.selectedOrder.$id}}">Place Order</a>
+            </div>
+
         </div>
 
         <div class="col-sm-6" ng-show="vm.selectedOrder.details">
 
             <h5>Who else is ordering?</h5>
 
-            <accordion close-others="true">
-                <accordion-group ng-repeat="detail in vm.selectedOrder.details track by $index">
+            <accordion close-others="false">
+                <accordion-group ng-repeat="detail in vm.selectedOrder.details track by $index"
+                                 ng-init="isOpen = detail.user.id === vm.userModel.user.id"
+                                 is-open="isOpen">
                     <accordion-heading>
                         <span ng-click="status.open = !status.open">
 
-                            {{detail.user.id === vm.userModel.user.id ? detail.user.displayName + ' (my order)' : detail.user.displayName}} ({{detail.order.length}}) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                            {{detail.user.id === vm.userModel.user.id ? detail.user.displayName + ' (my order)' : detail.user.displayName}} ({{detail.order.length || 0}}) <i
+                                class="pull-right glyphicon"
+                                ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                         </span>
                     </accordion-heading>
                     <ul class="list-group">
@@ -111,8 +121,6 @@
                     </ul>
                 </accordion-group>
             </accordion>
-
-            <a class="btn btn-large btn-success" href="/#/order-wizard/place-order/{{vm.selectedOrder.$id}}">Place Order</a>
 
         </div>
 

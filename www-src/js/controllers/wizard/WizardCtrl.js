@@ -5,9 +5,7 @@
     /**
      * @ngInject
      */
-    function WizardCtrl($log, NotifyService, fbutil, UserModel) {
-
-        var self = this;
+    function MyOrderCtrl($log, NotifyService, fbutil, UserModel) {
 
         // ViewModel
         var vm = this;
@@ -70,7 +68,6 @@
                 .then(function () {
                     NotifyService.success('Added ' + userOrder.order[userOrder.order.length - 1].name + ' to the order!');
                     vm.newOrderItemForm = undefined;
-                    self.updatePageTotals();
                 });
         };
 
@@ -79,7 +76,6 @@
             vm.orders.$save(vm.selectedOrder)
                 .then(function () {
                     NotifyService.success('Removed ' + item.name + ' from the order!');
-                    self.updatePageTotals();
                 });
         };
 
@@ -102,6 +98,6 @@
 
     angular
         .module('app.controllers.order-wizard')
-        .controller('WizardCtrl', WizardCtrl);
+        .controller('MyOrderCtrl', MyOrderCtrl);
 
 })();
