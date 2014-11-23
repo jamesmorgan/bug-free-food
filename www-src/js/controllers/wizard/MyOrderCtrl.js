@@ -20,9 +20,9 @@
         if (vm.optionalOrderId) {
             $log.debug('Attempting to get order for ref [%]', vm.optionalOrderId);
             vm.selectedOrder = fbutil.syncObject('orders/' + vm.optionalOrderId);
-        //} else {
-        //    $log.debug('Loading all orders');
-        //    vm.orders = fbutil.syncArray('orders');
+            //} else {
+            //    $log.debug('Loading all orders');
+            //    vm.orders = fbutil.syncArray('orders');
         }
 
         $log.debug('Loading all orders');
@@ -101,6 +101,14 @@
                 total += item.price;
             });
             return (total / 100).toFixed(2);
+        };
+
+        this.tallyUp = function (order) {
+            var totals = 0;
+            order.forEach(function (food) {
+                totals = totals += food.price;
+            });
+            return totals;
         };
 
         function hasOrderWithDetails() {

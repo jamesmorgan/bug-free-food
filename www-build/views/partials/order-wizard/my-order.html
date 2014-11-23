@@ -3,7 +3,7 @@
     <!--<pre>{{vm.selectedOrder | json}}</pre>-->
 
     <div class="page-header">
-        <h1>Make your order
+        <h1>Make totalorder
             <small>bug free...</small>
         </h1>
     </div>
@@ -79,7 +79,7 @@
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </button>
                 <div class="form-group pull-right">
-                    <h4> Your total: £{{vm.getUsersOrder()}}</h4>
+                    <h4>Your total: £{{vm.getUsersOrder()}}</h4>
                 </div>
             </form>
 
@@ -115,6 +115,7 @@
                             {{detail.user.displayName}} - {{food.name}}
                         </li>
                     </ul>
+                    <h4 class="pull-right">Your total: £{{(vm.tallyUp(detail.order) / 100).toFixed(2)}}</h4>
                 </accordion-group>
             </accordion>
 
