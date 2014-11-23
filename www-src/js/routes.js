@@ -6,10 +6,10 @@
      */
     var Routes = function ($routeProvider, $locationProvider) {
 
-        $routeProvider.when('/', {
-            templateUrl: 'www-build/views/partials/home/index.html',
-            controller: 'HomeCtrl as hc'
-        });
+        //$routeProvider.when('/', {
+        //    templateUrl: 'www-build/views/partials/home/index.html',
+        //    controller: 'HomeCtrl as hc'
+        //});
 
         /**
          * Orders Management
@@ -59,7 +59,7 @@
          * Fallback
          */
         $routeProvider.otherwise({
-            redirectTo: '/'
+            redirectTo: '/orders/list'
         });
 
         // Disable html 5 mode due to IE9 compatibility requirement!
