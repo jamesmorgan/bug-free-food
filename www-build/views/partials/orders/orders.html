@@ -70,9 +70,15 @@
                             <span class="pull-right">{{order.createdDate | date:'medium'}}</span>
                         </td>
                         <td class="text-right">
-                            <a class="btn btn-xs btn-primary" href="/#/order-wizard/my-order/{{order.$id}}"><i class="glyphicon glyphicon-shopping-cart">Edit</i></a>
-                            <a class="btn btn-xs btn-info" href="/#/order-wizard/place-order/{{order.$id}}"><i class="glyphicon glyphicon-eye-open">View</i></a>
-                            <button class="btn btn-xs btn-warning">
+                            <a class="btn btn-xs btn-primary"
+                               href="/#/order-wizard/my-order/{{order.$id}}">
+                                <i class="glyphicon glyphicon-shopping-cart">Edit</i>
+                            </a>
+                            <a class="btn btn-xs btn-info"
+                               href="/#/order-wizard/place-order/{{order.$id}}">
+                                <i class="glyphicon glyphicon-eye-open">View</i>
+                            </a>
+                            <button class="btn btn-xs btn-warning" ng-disabled="!vm.userModel.user">
                                 <span class="glyphicon glyphicon-trash" ng-click="vm.removeOrder(order)"></span>
                             </button>
                         </td>

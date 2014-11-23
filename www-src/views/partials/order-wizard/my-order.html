@@ -38,16 +38,16 @@
 
     <div class="row">
         <div class="col-sm-12" ng-if="vm.userModel.user">
-            <br />
-                <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
-                    Please select an <strong>order</strong> to amend!
-                </div>
-                <div class="alert alert-success" role="alert" ng-show="vm.selectedOrder">
-                    Your adding to the order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
-                </div>
-                <div class="alert alert-warning" role="alert" ng-if="vm.selectedOrder && !vm.userHasOrder()">
-                    You don't have any items, please <a ng-click="vm.initOrderForUser()">add one!</a>
-                </div>
+            <br/>
+            <div class="alert alert-warning" role="alert" ng-show="!vm.selectedOrder">
+                Please select an <strong>order</strong> to amend!
+            </div>
+            <div class="alert alert-success" role="alert" ng-show="vm.selectedOrder">
+                Your adding to the order <strong>{{vm.selectedOrder.name}}</strong> from <strong>{{vm.selectedOrder.restaurant.name}}.</strong>
+            </div>
+            <div class="alert alert-warning" role="alert" ng-if="vm.selectedOrder && !vm.userHasOrder()">
+                You don't have any items, please <a ng-click="vm.initOrderForUser()">add one!</a>
+            </div>
         </div>
     </div>
 
@@ -87,7 +87,7 @@
                 <hr/>
                 <a class="btn btn-large btn-success pull-right"
                    href="/#/order-wizard/place-order/{{vm.selectedOrder.$id}}">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> Place Order
+                    <span class="glyphicon glyphicon-shopping-cart"></span> All Orders
                 </a>
             </div>
 
